@@ -49,6 +49,7 @@ def simulador_buffer(entrada, tamano_buffer):
 # Entrada de ejemplo
 entrada = list("Esto es un ejemplo de entrada con eof")
 tamano_buffer = 10
-
+# Texto de entrada input
+print("La entrada es: Esto es un ejemplo de entrada con eof")
 # Ejecutar el simulador
 simulador_buffer(entrada, tamano_buffer)
