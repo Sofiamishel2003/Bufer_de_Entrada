@@ -82,9 +82,12 @@ El programa consta de tres funciones principales:
    ```bash
    python buffer_simulator.py
    ```
-
-## Contribuciones
-Si deseas contribuir a este proyecto, por favor abre un issue o envía un pull request.
+## Contributions
+https://github.com/Sofiamishel2003
+https://github.com/DiegoDuaS
+https://github.com/Maria-Villafuerte
+https://github.com/Fabiola-cc
+https://github.com/nicollegordillo
 
 ## Licencia
 Este proyecto está disponible bajo la licencia MIT.
