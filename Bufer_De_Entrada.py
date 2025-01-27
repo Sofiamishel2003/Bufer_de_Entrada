@@ -6,29 +6,33 @@ def cargar_buffer(entrada, inicio, tamano_buffer):
     """
     buffer = entrada[inicio:inicio + tamano_buffer]
     if len(buffer) < tamano_buffer:
-        buffer.append("eof")
+        buffer.append("eof")  # Añadir el centinela "eof" si faltan caracteres
+    print(f"Búfer cargado: {buffer} (inicio: {inicio})")
     return buffer
 
-def procesar_buffer(buffer):
+def procesar_buffer(buffer, avance, lexema_actual):
     """
     Procesa el contenido del búfer y extrae lexemas.
     Un lexema está delimitado por espacios o el final del búfer.
     """
-    lexema = ""
     lexemas_procesados = []
 
-    for char in buffer:
+    while avance < len(buffer):
+        char = buffer[avance]
+        avance += 1
+
         if char.isspace() or char == "eof":
-            if lexema:
-                lexemas_procesados.append(lexema)
-                print(f"Lexema procesado: {lexema}")
-                lexema = ""
+            if lexema_actual:  # Si hay un lexema acumulado, se procesa
+                lexemas_procesados.append(lexema_actual)
+                print(f"Lexema procesado: {lexema_actual}")
+                lexema_actual = ""  # Reiniciar lexema actual
             if char == "eof":
+                print("Fin del procesamiento: 'eof' encontrado.")
                 break
         else:
-            lexema += char
+            lexema_actual += char  # Acumular caracteres del lexema
 
-    return lexemas_procesados
+    return lexemas_procesados, avance, lexema_actual
 
 def simulador_buffer(entrada, tamano_buffer):
     """
@@ -36,15 +40,21 @@ def simulador_buffer(entrada, tamano_buffer):
     Utiliza punteros de inicio y avance para manejar el procesamiento.
     """
     inicio = 0
+    lexema_actual = ""  # Acumula caracteres entre espacios
     while inicio < len(entrada):
-        # Carga el búfer con los datos a partir de "inicio"
+        # Cargar el búfer desde la posición actual del puntero inicio
         buffer = cargar_buffer(entrada, inicio, tamano_buffer)
 
-        # Procesa el contenido del búfer
-        procesar_buffer(buffer)
+        # Procesar el contenido del búfer
+        avance = 0  # Puntero para avanzar dentro del búfer
+        lexemas, avance, lexema_actual = procesar_buffer(buffer, avance, lexema_actual)
 
-        # Avanza el puntero de inicio al siguiente segmento
+        # Avanzar el puntero de inicio al siguiente segmento
         inicio += tamano_buffer
+
+        # Si el centinela "eof" fue encontrado, se termina el ciclo
+        if "eof" in buffer:
+            break
 
 # Entrada de ejemplo
 entrada = list("Esto es un ejemplo de entrada con eof")
