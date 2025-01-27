@@ -1,39 +1,55 @@
-# Simulador de Búfer de Entrada en Python
 
-## Descripción
-Este proyecto es un simulador de un búfer de entrada implementado en Python. Utiliza un carácter especial (`eof`) como centinela para marcar el final de los datos, siguiendo el concepto de manejo de búferes y centinelas. Su objetivo es procesar eficientemente una lista de caracteres dividiéndolos en lexemas (palabras) y demostrando cómo manejar datos utilizando punteros.
-![image](https://github.com/user-attachments/assets/298205a3-9919-4ffb-bc28-f7776729a3b9)
+---
 
-## Características
-- Simulación de un búfer con tamaño fijo.
-- Uso de punteros para manejar la entrada de datos.
-- Manejo de un carácter centinela (`eof`) para indicar el final de los datos.
-- Extracción y procesamiento de lexemas (fragmentos de texto entre espacios o delimitadores).
+# **Simulador de Búfer de Entrada en Python**
 
-## Archivos Principales
-1. **`buffer_simulator.py`**: Contiene la implementación del simulador de búfer.
-2. **`README.md`**: Este archivo de documentación.
+Este proyecto es un simulador de un búfer de entrada con tamaño fijo en Python. El objetivo principal es procesar datos eficientemente utilizando un concepto de búfer, punteros (`inicio` y `avance`), y un carácter especial (`eof`) como centinela para indicar el final de los datos.
 
-## Uso
-### Entrada
-La entrada es una lista de caracteres que representa un texto. Debe finalizar con el carácter especial `eof` para que el simulador detecte el final del texto.
+## **Características del Simulador**
+- Procesa datos de entrada utilizando un búfer con un tamaño fijo (10 caracteres por defecto).
+- Extrae "lexemas" (secuencias de caracteres entre espacios o al final del texto).
+- Maneja espacios y un carácter especial `eof` para delimitar el final del procesamiento.
+- Utiliza punteros para organizar el manejo del búfer y recargar datos cuando se alcanza el final del segmento actual.
 
-### Ejecución
-1. Define la lista de entrada como una cadena de texto.
-2. Configura el tamaño del búfer (por defecto, 10 caracteres).
-3. Llama a la función principal `simulador_buffer` con los parámetros definidos.
+---
 
-### Ejemplo
-```python
-entrada = list("Esto es un ejemplo de entrada con eof")
-tamano_buffer = 10
+## **Cómo Funciona**
+El programa está dividido en tres funciones principales:
 
-simulador_buffer(entrada, tamano_buffer)
+### 1. **`cargar_buffer(entrada, inicio, tamano_buffer)`**
+Carga un segmento del texto en un búfer con tamaño fijo.
+- Si el segmento es más pequeño que el tamaño del búfer, se agrega el centinela `eof`.
+- Esta función asegura que siempre haya datos disponibles para procesar en un tamaño predefinido.
+
+### 2. **`procesar_buffer(buffer, avance, lexema_actual)`**
+Procesa el contenido del búfer y extrae lexemas.
+- Identifica lexemas delimitados por espacios o el carácter `eof`.
+- Maneja un acumulador (`lexema_actual`) para procesar lexemas que puedan estar divididos entre dos búferes consecutivos.
+
+### 3. **`simulador_buffer(entrada, tamano_buffer)`**
+Controla el flujo general del programa.
+- Divide la entrada en segmentos utilizando `cargar_buffer`.
+- Procesa cada segmento con `procesar_buffer`.
+- Utiliza punteros (`inicio` y `avance`) para manejar el progreso a lo largo de la entrada.
+
+---
+
+## **Requisitos**
+- Python 3.6 o superior.
+
+---
+
+## **Ejemplo de Uso**
+Entrada: 
+```plaintext
+Esto es un ejemplo de entrada con eof
 ```
 
-### Salida
-El programa imprimirá los lexemas procesados:
+Tamaño del búfer: `10`
+
+Salida esperada:
 ```plaintext
+La entrada es: Esto es un ejemplo de entrada con eof
 Lexema procesado: Esto
 Lexema procesado: es
 Lexema procesado: un
@@ -44,44 +60,31 @@ Lexema procesado: con
 Lexema procesado: eof
 ```
 
-## Explicación del Código
-El programa consta de tres funciones principales:
+---
 
-1. **`cargar_buffer(entrada, inicio, tamano_buffer)`**:
-   - Llena el búfer con una sección de la entrada, comenzando desde el índice `inicio`.
-   - Si la entrada tiene menos caracteres que el tamaño del búfer, agrega el carácter `eof`.
-
-2. **`procesar_buffer(buffer)`**:
-   - Itera sobre los caracteres del búfer para construir lexemas.
-   - Los lexemas se delimitan por espacios o el carácter `eof`.
-   - Imprime y devuelve los lexemas procesados.
-
-3. **`simulador_buffer(entrada, tamano_buffer)`**:
-   - Maneja la lógica del procesamiento iterativo.
-   - Usa un puntero (`inicio`) para cargar el búfer en segmentos de tamaño fijo y procesarlos secuencialmente.
-
-## Ventajas
-- **Eficiencia**: Procesa datos en bloques fijos, optimizando el manejo de memoria.
-- **Escalabilidad**: Puede adaptarse a flujos de entrada más grandes sin necesidad de leer todo el contenido en memoria.
-- **Simplicidad**: La implementación modular facilita su comprensión y extensión.
-
-## Comentario sobre el Código
-```python
-# Este programa simula el manejo de un búfer de entrada utilizando punteros y un centinela ("eof").
-# Divide el texto en bloques de tamaño fijo, procesa cada bloque extrayendo lexemas
-# delimitados por espacios y finaliza cuando se encuentra el carácter "eof".
-# Este enfoque es ideal para simular el procesamiento eficiente de datos en tiempo real.
-```
-
-## Requisitos del Sistema
-- Python 3.7 o superior.
-
-## Ejecución del Programa
-1. Clona el repositorio o copia el archivo `buffer_simulator.py`.
-2. Ejecuta el script desde la línea de comandos:
+## **Cómo Ejecutarlo**
+1. Clona este repositorio:
    ```bash
-   python buffer_simulator.py
+   git clone https://github.com/tuusuario/simulador-buffer-python.git
+   cd simulador-buffer-python
    ```
+
+2. Ejecuta el archivo principal:
+   ```bash
+   python bufer_simulador.py
+   ```
+
+---
+
+---
+
+## **Ventajas del Proyecto**
+- **Eficiencia**: Procesa datos en fragmentos de tamaño fijo, optimizando el uso de memoria.
+- **Modularidad**: Cada función tiene una responsabilidad clara, facilitando la extensibilidad.
+- **Flexibilidad**: Fácilmente adaptable para manejar otros tamaños de búfer o diferentes delimitadores.
+
+---
+
 ## Contributions
 https://github.com/Sofiamishel2003
 https://github.com/DiegoDuaS
