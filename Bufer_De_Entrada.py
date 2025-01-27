@@ -7,7 +7,7 @@ def cargar_buffer(entrada, inicio, tamano_buffer):
     buffer = entrada[inicio:inicio + tamano_buffer]
     if len(buffer) < tamano_buffer:
         buffer.append("eof")  # Añadir el centinela "eof" si faltan caracteres
-    print(f"Búfer cargado: {buffer} (inicio: {inicio})")
+   # print(f"Búfer cargado: {buffer} (inicio: {inicio})")
     return buffer
 
 def procesar_buffer(buffer, avance, lexema_actual):
@@ -27,7 +27,7 @@ def procesar_buffer(buffer, avance, lexema_actual):
                 print(f"Lexema procesado: {lexema_actual}")
                 lexema_actual = ""  # Reiniciar lexema actual
             if char == "eof":
-                print("Fin del procesamiento: 'eof' encontrado.")
+               # print("Fin del procesamiento: 'eof' encontrado.")
                 break
         else:
             lexema_actual += char  # Acumular caracteres del lexema
